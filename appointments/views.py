@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Appointments
 
@@ -18,7 +18,7 @@ def book_appointment(request):
         email = request.POST.get('email')       
         doctor = request.POST.get('doctor')
     
-        Appointments.objects.create(
+        appointment = Appointments.objects.create(
         name = name,
         email = email,
         mobile_number = mobile_number,
@@ -28,9 +28,24 @@ def book_appointment(request):
         
         
     )
+        
+        request.session['appointment_id'] = appointment.id
+        
         return redirect('success')
 
     return render(request, 'index.html')
 
 def appointment_success(request):
-    return render(request, 'success.html')
+    appointment_id = request.session.get('appointment_id')
+    
+    if not appointment_id:
+        return redirect('index')
+    
+    appointment = Appointments.objects.filter(id = appointment_id).first()
+    
+    if not appointment:
+        return redirect('index')
+    
+    return render(request, 'success.html', {
+        'appointment': appointment
+    })
