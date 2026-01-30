@@ -1,0 +1,65 @@
+{% extends "base.html" %} {% block title %}Dashboard{% endblock %} {% block
+content %}
+<h2>Doctor Dashboard</h2>
+
+<div class="row mt-4">
+  <div class="col-md-4">
+    <div class="card text-bg-primary">
+      <div class="card-body">
+        <h6>Total Appointments</h6>
+        <h2>{{ total }}</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card text-bg-success">
+      <div class="card-body">
+        <h6>Today's Appointments</h6>
+        <h2>{{ today }}</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h4 class="mt-5">Recent Appointments</h4>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Doctor</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in recent %}
+    <tr>
+      <td>{{ a.name }}</td>
+      <td>{{ a.doctor }}</td>
+      <td>{{ a.date }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h4 class="mt-5">Appointments Analytics</h4>
+
+<canvas id="appointmentsChart"></canvas>
+
+<script>
+  const ctx = document.getElementById("appointmentsChart");
+
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+      datasets: [
+        {
+          label: "Appointments",
+          data: [5, 8, 4, 6, 9],
+        },
+      ],
+    },
+  });
+</script>

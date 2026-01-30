@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+<!doctype html>
+<html>
+  <head>
+    <title>Clinic</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav>
+      <a href="{% url 'dashboard' %}">Home</a>
+      <a href="{% url 'appointments:index' %}">Appointments</a>
+      <a href="{% url 'patients:list' %}">Patients</a>
+    </nav>
+
+    <hr />
+
+    <!-- SIDEBAR -->
+    <div style="display: flex">
+      <aside style="width: 200px">
+        <p>Dashboard</p>
+        <p>Reports</p>
+        <p>AI Results</p>
+      </aside>
+
+      <main style="flex: 1">{% block content %} {% endblock %}</main>
+    </div>
+
+    <footer>© 2026 Clinic Management System</footer>
+  </body>
+</html>

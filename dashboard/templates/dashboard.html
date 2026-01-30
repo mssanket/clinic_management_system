@@ -1,0 +1,132 @@
+{% extends 'base.html' %} {% block content %}
+
+<!-- Page Title -->
+<h2 class="mb-4">Dashboard</h2>
+
+<!-- STAT CARDS -->
+<div class="row g-3 mb-4">
+  <!-- Total Patients Card -->
+  <div class="col-md-6 col-lg-3">
+    <div class="card text-white bg-primary shadow-sm h-100">
+      <div class="card-body text-center">
+        <h6>Total Patients</h6>
+        <h3 class="fw-bold">{{ total_patients }}</h3>
+        <i class="bi bi-people-fill fs-1 mt-2"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Total Appointments Card -->
+  <div class="col-md-6 col-lg-3">
+    <div class="card text-white bg-success shadow-sm h-100">
+      <div class="card-body text-center">
+        <h6>Total Appointments</h6>
+        <h3 class="fw-bold">{{ total_appointments }}</h3>
+        <i class="bi bi-calendar-check-fill fs-1 mt-2"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Placeholder for future cards -->
+  <div class="col-md-6 col-lg-3">
+    <div class="card text-white bg-warning shadow-sm h-100">
+      <div class="card-body text-center">
+        <h6>Pending Tasks</h6>
+        <h3 class="fw-bold">5</h3>
+        <i class="bi bi-hourglass-split fs-1 mt-2"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-3">
+    <div class="card text-white bg-danger shadow-sm h-100">
+      <div class="card-body text-center">
+        <h6>Alerts</h6>
+        <h3 class="fw-bold">2</h3>
+        <i class="bi bi-exclamation-triangle-fill fs-1 mt-2"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RECENT APPOINTMENTS TABLE -->
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Recent Appointments</h5>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Patient</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in recent_appointments %}
+          <tr>
+            <td>{{ a.patient.name }}</td>
+            <td>{{ a.date|date:"M d, Y" }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="2" class="text-center text-muted">
+              No recent appointments
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CLINIC STATS CHART -->
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Clinic Stats</h5>
+    <canvas id="myChart"></canvas>
+  </div>
+</div>
+
+<!-- CHART.JS SCRIPT -->
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Patients', 'Appointments'],
+      datasets: [{
+        label: 'Count',
+        data: [{{ total_patients }}, {{ total_appointments }}],
+        backgroundColor: ['#0d6efd', '#198754'], // Blue for patients, green for appointments
+        borderRadius: 5
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.dataset.label + ': ' + context.parsed.y;
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1
+          }
+        }
+      }
+    }
+  });
+</script>
+
+{% endblock %}

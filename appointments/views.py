@@ -1,4 +1,7 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.mail import send_mail
+from django.conf import settings
 
 from .models import Appointments
 
@@ -29,6 +32,9 @@ def book_appointment(request):
         
     )
         
+        
+        
+        
         request.session['appointment_id'] = appointment.id
         
         return redirect('success')
@@ -49,3 +55,6 @@ def appointment_success(request):
     return render(request, 'success.html', {
         'appointment': appointment
     })
+    
+def list_appointments(request):
+    return HttpResponse('Appointment list')
