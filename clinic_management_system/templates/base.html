@@ -12,39 +12,56 @@
 
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Clinic</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url "dashboard" %}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url "appointments:index" %}">Appointments</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " href="#" aria-disabled="true">Patients</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " href="#" aria-disabled="true">About</a>
-            </li>
-          </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="{% url 'home' %}">Clinic</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <!-- LEFT LINKS -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'appointments:index' %}">Book Appointment</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+      </ul>
+
+      <!-- RIGHT LINKS -->
+      <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+          </li>
+
+          <form action="{% url "logout" %}" method="post" class="d-line">
+            {% csrf_token %}
+            <button type="submit" class = "nav-link btn btn-link p-0">Logout</button>
           </form>
-        </div>
-      </div>
-    </nav>
+          
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Doctor Login</a>
+          </li>
+        {% endif %}
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
   <div class="container mt-1">{% block content %}{% endblock content %}</div>
   <div class="container mt-1">
     <footer class="text-center mt-5 text-muted">

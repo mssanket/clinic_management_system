@@ -1,13 +1,14 @@
-{% extends "base.html" %}
-
 <!doctype html>
 <html>
   <head>
-    <title>Clinic</title>
+    <title>{% block title %}Clinic{% endblock %}</title>
+
+    <!-- Chart.js (MUST be before any chart usage) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
+
   <body>
-    <!-- NAVBAR -->
+    <!-- Navbar -->
     <nav>
       <a href="{% url 'dashboard' %}">Home</a>
       <a href="{% url 'appointments:index' %}">Appointments</a>
@@ -16,7 +17,6 @@
 
     <hr />
 
-    <!-- SIDEBAR -->
     <div style="display: flex">
       <aside style="width: 200px">
         <p>Dashboard</p>
@@ -24,7 +24,7 @@
         <p>AI Results</p>
       </aside>
 
-      <main style="flex: 1">{% block content %} {% endblock %}</main>
+      <main style="flex: 1">{% block content %}{% endblock %}</main>
     </div>
 
     <footer>© 2026 Clinic Management System</footer>

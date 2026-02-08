@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "appointments",
     'dashboard',
+    'core',
     
 ]
 
@@ -132,3 +133,7 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'mssanket@gmail.com'
 EMAIL_HOST_PASSWORD = 'your_app_password@123'
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+LOGIN_URL = "/accounts/login/"

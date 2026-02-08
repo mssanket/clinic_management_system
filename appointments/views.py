@@ -37,7 +37,7 @@ def book_appointment(request):
         
         request.session['appointment_id'] = appointment.id
         
-        return redirect('success')
+        return redirect('appointments:success')
 
     return render(request, 'index.html')
 
@@ -45,14 +45,14 @@ def appointment_success(request):
     appointment_id = request.session.get('appointment_id')
     
     if not appointment_id:
-        return redirect('index')
+        return redirect('appointments:index')
     
     appointment = Appointments.objects.filter(id = appointment_id).first()
     
     if not appointment:
-        return redirect('index')
+        return redirect('appointments:index')
     
-    return render(request, 'success.html', {
+    return render(request, 'appointments/success.html', {
         'appointment': appointment
     })
     

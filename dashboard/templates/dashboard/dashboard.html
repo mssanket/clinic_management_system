@@ -1,4 +1,5 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
+{% block content %}
 
 <!-- Page Title -->
 <h2 class="mb-4">Dashboard</h2>
@@ -19,7 +20,7 @@
   <!-- Total Appointments Card -->
   <div class="col-md-6 col-lg-3">
     <div class="card text-white bg-success shadow-sm h-100">
-      <div class="card-body text-center">
+      <div class="card-body text-center"
         <h6>Total Appointments</h6>
         <h3 class="fw-bold">{{ total_appointments }}</h3>
         <i class="bi bi-calendar-check-fill fs-1 mt-2"></i>
@@ -87,6 +88,8 @@
     <canvas id="myChart"></canvas>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- CHART.JS SCRIPT -->
 <script>

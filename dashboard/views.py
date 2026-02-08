@@ -1,10 +1,15 @@
 from datetime import date
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 from appointments.models import Appointments
 
 # Create your views here.
 
+def home_view(reqest):
+    return render(reqest, 'home.html')
+
+@login_required
 def dashboard_view(request):
     total_patients = Appointments.objects.count()
     total_appointments = Appointments.objects.count()
